@@ -10,8 +10,8 @@ public class ClickStart : MonoBehaviour
     [SerializeField] public GameObject backButton;
     [SerializeField] private GameObject galleryBtn;
     [SerializeField] private GameObject galyBackBtn;
-    [SerializeField] public GameObject Btn1;            //何かしらのミニゲーム1
-    [SerializeField] public GameObject Btn2;            //何かしらのミニゲーム2
+    [SerializeField] public GameObject Btn1;
+    [SerializeField] public GameObject Btn2;
     [SerializeField] private GameObject _Camera;
     [SerializeField] private GameObject TitleText;
     [SerializeField] private GameObject ScoreText;
@@ -36,14 +36,9 @@ public class ClickStart : MonoBehaviour
     {
         _audio = GetComponent<AudioSource>();
 
-        //_Camera.transform.position = new Vector3(0, 0, -10);
         GalleryFrame.transform.position = new Vector3(3, 0, 0);
-
-        //ギャラリーで表示する画像の初期設定
         Image00.SetActive(false);
         Image01.SetActive(false);
-        Image01.transform.position = new Vector3(160, 140, 0);
-        Image00.transform.position = new Vector3(-100, 140, 0);
         ImageBack.SetActive(false);
 
 
@@ -62,23 +57,18 @@ public class ClickStart : MonoBehaviour
 
     void Update()
     {
-        if (isPlay)         //タイトル画面でスタートが押されたら
+        if (isPlay)
         {
-            if (!isGallery) //スタートが押されてギャラリーが押されていないなら
+            if (!isGallery)
             {
-
-                //_Camera.transform.position = new Vector3(0, 0, -10);
-
                 Btn1.SetActive(true);
                 Btn2.SetActive(true);
                 backButton.SetActive(true);
                 galleryBtn.SetActive(true);
             }
-            else            //スタート画面でギャラリーが押されたら
+            else
             {
-      
-                //_Camera.transform.position = new Vector3(0, 0, -30);                
-                GalleryFrame.transform.position = new Vector3(70, 0, 300);
+                GalleryFrame.transform.position = new Vector3(210,0,0);
 
                 Btn1.SetActive(false);
                 Btn2.SetActive(false);
@@ -89,24 +79,21 @@ public class ClickStart : MonoBehaviour
                 Image01.SetActive(true);
             }
         }
-        else               //スタートが押されていない or バックボタンで戻った
+        else
         {
-
-            //_Camera.transform.position = new Vector3(0, 0, -10);
-
             Btn1.SetActive(false);
             Btn2.SetActive(false);
             backButton.SetActive(false);
             galleryBtn.SetActive(false);
             GalleryFrame.SetActive(false);
         }
-        //ESCを押したらゲーム終了関数を呼び終了
+        
         if (Input.GetKey(KeyCode.Escape)) Quit();
+
     }
 
     public void clickStart()
     {
-
         _audio.PlayOneShot(SE_select);
         ScoreText.SetActive(true);
         TitleText.SetActive(false);
@@ -189,12 +176,8 @@ public class ClickStart : MonoBehaviour
         GalleryFrame.SetActive(false);
         galyBackBtn.SetActive(false);
         ImageBack.SetActive(true);
-        /*
-        Image00.SetActive(false);
-        Image01.SetActive(false);
-        */
-        Image01.transform.position = new Vector3(700, 140, 0);
-        Image00.transform.position = new Vector3(-500, 140, 0);
+        Image00.transform.position = new Vector3(-1000, -1000, 0);
+        Image01.transform.position = new Vector3(-1000, -1000, 0);
     }
 
     public void ShowImage01()
@@ -208,15 +191,15 @@ public class ClickStart : MonoBehaviour
         GalleryFrame.SetActive(false);
         galyBackBtn.SetActive(false);
         ImageBack.SetActive(true);
-        Image01.transform.position = new Vector3(700, 140, 0);
-        Image00.transform.position = new Vector3(-500, 140, 0);
+        Image00.transform.position = new Vector3(-1000, -1000, 0);
+        Image01.transform.position = new Vector3(-1000, -1000, 0);
     }
 
     public void ShowImageBack()
     {
         _audio.PlayOneShot(SE_select);
-        Image00.SetActive(false);
-        Image01.SetActive(false);
+        Image00.SetActive(true);
+        Image01.SetActive(true);
         GalleryFrame.SetActive(true);
         galyBackBtn.SetActive(true);
         ImageBack.SetActive(false);
@@ -224,7 +207,7 @@ public class ClickStart : MonoBehaviour
         ImageList[0].SetActive(false);
         ImageList[1].SetActive(false);
 
-        Image01.transform.position = new Vector3(160, 140, 0);
-        Image00.transform.position = new Vector3(-100, 140, 0);
+        Image00.transform.position = new Vector3(-250, 250, 0);
+        Image01.transform.position = new Vector3(-250, 250, 0);
     }
 }
