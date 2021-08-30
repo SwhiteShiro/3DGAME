@@ -36,7 +36,6 @@ public class ClickStart : MonoBehaviour
     {
         _audio = GetComponent<AudioSource>();
 
-        GalleryFrame.transform.position = new Vector3(3, 0, 0);
         Image00.SetActive(false);
         Image01.SetActive(false);
         ImageBack.SetActive(false);
@@ -68,15 +67,11 @@ public class ClickStart : MonoBehaviour
             }
             else
             {
-                GalleryFrame.transform.position = new Vector3(210,0,0);
 
                 Btn1.SetActive(false);
                 Btn2.SetActive(false);
                 backButton.SetActive(false);
                 galleryBtn.SetActive(false);
-
-                Image00.SetActive(true);
-                Image01.SetActive(true);
             }
         }
         else
@@ -155,6 +150,9 @@ public class ClickStart : MonoBehaviour
         isGallery = true;
         galyBackBtn.SetActive(true);
         GalleryFrame.SetActive(true);
+
+        Image00.SetActive(true);
+        Image01.SetActive(true);
     }
 
     public void GalleryBack()
@@ -176,8 +174,8 @@ public class ClickStart : MonoBehaviour
         GalleryFrame.SetActive(false);
         galyBackBtn.SetActive(false);
         ImageBack.SetActive(true);
-        Image00.transform.position = new Vector3(-1000, -1000, 0);
-        Image01.transform.position = new Vector3(-1000, -1000, 0);
+        Image00.SetActive(false);
+        Image01.SetActive(false);
     }
 
     public void ShowImage01()
@@ -191,8 +189,6 @@ public class ClickStart : MonoBehaviour
         GalleryFrame.SetActive(false);
         galyBackBtn.SetActive(false);
         ImageBack.SetActive(true);
-        Image00.transform.position = new Vector3(-1000, -1000, 0);
-        Image01.transform.position = new Vector3(-1000, -1000, 0);
     }
 
     public void ShowImageBack()
@@ -206,8 +202,5 @@ public class ClickStart : MonoBehaviour
 
         ImageList[0].SetActive(false);
         ImageList[1].SetActive(false);
-
-        Image00.transform.position = new Vector3(-250, 250, 0);
-        Image01.transform.position = new Vector3(-250, 250, 0);
     }
 }

@@ -6,15 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class GameManagerSclipt : MonoBehaviour
 {
-    public GameObject scoreObj;         //関数を利用するため
-    public GameObject ScoreObj;         //スコア取得用変数
+    public GameObject scoreObj;         
+    public GameObject ScoreObj;         
     public GameObject clickBtn;
     public GameObject _unityChan;
-    public GameObject subCamera;
     public GameObject timer;
     public GameObject _contenue;
     public GameObject BackToTitle;
-    public GameObject CDtext;           //カウントダウンテキスト
+    public GameObject CDtext;           
 
     public static float _min = 1.0f;
     public static float _max = 30.0f;
@@ -36,6 +35,10 @@ public class GameManagerSclipt : MonoBehaviour
     private bool isResult = false;
     private bool isScore = false;
 
+    [SerializeField] private Canvas _cameraRender;
+    [SerializeField] private Camera mainCamera;
+    [SerializeField] private Camera subCamera;
+
     TriggerSerch _Score;
 
     AudioSource _AudioCountDown;
@@ -55,6 +58,8 @@ public class GameManagerSclipt : MonoBehaviour
         _contenue.SetActive(false);
         BackToTitle.SetActive(false);
 
+        _cameraRender.worldCamera = subCamera;
+
         scoreObj.transform.position = new Vector3(10, 1, 20);
         _unityChan.transform.position = new Vector3(0, 0, 0);
 
@@ -65,17 +70,17 @@ public class GameManagerSclipt : MonoBehaviour
         CDtext.SetActive(false);
     }
 
-    // Update is called once per frame
+
     void Update()
     {
-        //ゲーム開始状態でカウントが0以上　かつ　リザルト状態じゃない時
         if (isPlaying && countTime > 0 && !isResult)
         {
+
 
             countTime -= Time.deltaTime;
             timer.GetComponent<Text>().text = countTime.ToString("F2");
 
-            if (countTime <= 0)     //タイマーが0になったらゲーム終了
+            if (countTime <= 0)
             {
                 isPlaying = false;
                 isResult = true;
@@ -98,15 +103,15 @@ public class GameManagerSclipt : MonoBehaviour
 
         if (isResult)
         {
+            _cameraRender.GetComponent<Canvas>().worldCamera = subCamera;
+
             if (!isScore)
             {
-                //リザルト画面になったら　先にロードし
                 loadScore = PlayerPrefs.GetInt("G1SCORE", 0);
 
-                //スコアをセーブする
                 resultScore = _Score.score + loadScore;
 
-                Debug.Log("現在のSCOREは　" + resultScore);
+                Debug.Log("??????SCORE???@" + resultScore);
                 PlayerPrefs.SetInt("G1SCORE", resultScore);
                 PlayerPrefs.Save();
                 isScore = true;
@@ -114,7 +119,7 @@ public class GameManagerSclipt : MonoBehaviour
 
             scoreObj.SetActive(false);
             _unityChan.SetActive(false);
-            subCamera.SetActive(true);
+            subCamera.gameObject.SetActive(true);
             timer.SetActive(false);
 
             _contenue.SetActive(true);
@@ -124,9 +129,11 @@ public class GameManagerSclipt : MonoBehaviour
 
     public void ClickStartGame()
     {
+        _cameraRender.GetComponent<Canvas>().worldCamera = mainCamera;
+
         clickBtn.SetActive(false);
         _unityChan.SetActive(true);
-        subCamera.SetActive(false);
+        subCamera.gameObject.SetActive(false);
         timer.SetActive(true);
         
         countTime = cTime;
@@ -164,7 +171,7 @@ public class GameManagerSclipt : MonoBehaviour
         yield return new WaitForSeconds(0.7f);
         CDtext.SetActive(false);
 
-        //ゲームが開始
+        //?Q?[?????J?n
         isPlaying = true;
         isResult = false;
         isScore = false;

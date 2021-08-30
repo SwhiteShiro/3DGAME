@@ -11,8 +11,8 @@ public class Game2Manager : MonoBehaviour
     public GameObject _continueBtn;
     public GameObject timer;
 
-    public GameObject _cube;        //銃のオブジェクト
-    public GameObject _site;        //照準
+    public GameObject _cube;        //?e???I?u?W?F?N?g
+    public GameObject _site;        //????
 
     public GameObject _Score;
 
@@ -22,15 +22,24 @@ public class Game2Manager : MonoBehaviour
     private int loadScore = 0;
     private int resultScore = 0;
 
-    private bool isPlaying = false;
+    [System.NonSerialized] public bool isPlaying = false;
     private bool isResult = false;
     private bool isScore = false;
+
+    [SerializeField] private Canvas _cameraRenderGame2;
+    [SerializeField] private Camera g2mainCamera;
+    [SerializeField] private Camera g2subCamera;
+
 
     CheckHitBullet bulletScore;
 
     // Start is called before the first frame update
     void Start()
     {
+        _cameraRenderGame2.GetComponent<Canvas>().worldCamera = g2subCamera;
+        g2subCamera.gameObject.SetActive(true);
+        g2mainCamera.gameObject.SetActive(false);
+
         _cube.GetComponent<Shooting>().enabled = false;
 
         isPlaying = false;
@@ -67,6 +76,10 @@ public class Game2Manager : MonoBehaviour
 
         if (isResult)
         {
+            _cameraRenderGame2.GetComponent<Canvas>().worldCamera = g2mainCamera;
+            g2mainCamera.gameObject.SetActive(true);
+            g2subCamera.gameObject.SetActive(false);
+
             _site.SetActive(false);
             if (!isScore)
             {
@@ -74,7 +87,7 @@ public class Game2Manager : MonoBehaviour
 
                 resultScore = loadScore + bulletScore.score;
 
-                Debug.Log("GAME2のSCOREは " + resultScore + "です");
+                Debug.Log("GAME2??SCORE?? " + resultScore + "????");
                 PlayerPrefs.SetInt("G2SCORE", resultScore);
                 PlayerPrefs.Save();
                 isScore = true;
@@ -90,6 +103,10 @@ public class Game2Manager : MonoBehaviour
 
     public void StartGame2()
     {
+        _cameraRenderGame2.GetComponent<Canvas>().worldCamera = g2mainCamera;
+        g2mainCamera.gameObject.SetActive(true);
+        g2subCamera.gameObject.SetActive(false);
+
         _cube.GetComponent<Shooting>().enabled = true;
         isPlaying = true;
         _startBtn.SetActive(false);
@@ -97,6 +114,8 @@ public class Game2Manager : MonoBehaviour
     }
     public void ContinueGame2()
     {
+        _cameraRenderGame2.GetComponent<Canvas>().worldCamera = g2mainCamera;
+
         isPlaying = true;
         _continueBtn.SetActive(false);
         countTime = 0.0f;
